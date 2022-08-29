@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-export default function Form({ id, token }) {
+export default function Form({ id, token,setIsLoading }) {
   const [password, setPassword] = useState();
   const [passwordConfirm, setPasswordConfirm] = useState();
   const [error, setError] = useState("");
-
+  const [color, setColor] = useState()
   const resetPassword = async (e) => {
     e.preventDefault();
+    setColor('red')
     if (!password && !passwordConfirm) {
       setError("All Fields Are Mendatory");
       return;
@@ -27,12 +28,14 @@ export default function Form({ id, token }) {
       body: JSON.stringify({password:password}),
     };
     try {
+      setIsLoading(true)
       const data = await fetch(
         process.env.REACT_APP_BASE_URL  + id + "/" + token,
         requestOptions
       );
       if (data.ok) {
-        setError("Password Successfully Updated");
+        setColor('green')
+        setError("Password Successfully Updated, the window will be closed in 5 seconds");
         return;
       }
       setError("Token Has Expierd Or Invalid");
@@ -40,6 +43,10 @@ export default function Form({ id, token }) {
       setError("Error While Updating The Password");
       throw new Error("Error While Updating The Password");
     }
+    setIsLoading(false)
+    setTimeout(() => {
+      window.close()
+    }, 5000);
   };
   return (
     <form onSubmit={resetPassword}>
@@ -56,7 +63,7 @@ export default function Form({ id, token }) {
         />
       </div>
       <button type="submit">Change Password</button>
-      <span>{error}</span>
+      <span className="error-text" style={{color:color}}>{error}</span>
     </form>
   );
 }

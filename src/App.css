@@ -5,6 +5,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 form{
   width: 90%;
@@ -36,4 +37,21 @@ form div{
   align-items: center;
   grid-template-columns: 1fr 1fr;
   justify-content: flex-start;
+}
+.box{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  color: white;
+  align-items: center;
+  width: 100%;
+  height:100vh;
+  position:absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.error-text{
+  /* color: red; */
+  font-weight: bold;
 }
