@@ -1,2 +1,3 @@
-Simple Landing Page For Reseting Password For The Last Fugitive Game.<br/>
-Server Logic Is In The Server Repositoriy
+Simple landing page for reseting password for the last fugitive game.<br/>
+Requires user id and token that embedded in the url sent to user mail.<br/> 
+Server logic is in the game server repositoriy
