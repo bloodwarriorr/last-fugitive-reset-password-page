@@ -3,6 +3,7 @@ import Form from "./components/Form";
 import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
 import { useState } from "react";
+import { Typography } from "@mui/material";
 
 function App() {
   const queryString = window.location.search;

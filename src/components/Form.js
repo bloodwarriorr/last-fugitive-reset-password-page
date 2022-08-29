@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-export default function Form({ id, token,setIsLoading }) {
+import { Button, TextField, Typography } from "@mui/material";
+export default function Form({ id, token, setIsLoading }) {
   const [password, setPassword] = useState();
   const [passwordConfirm, setPasswordConfirm] = useState();
   const [error, setError] = useState("");
-  const [color, setColor] = useState()
+  const [color, setColor] = useState();
   const resetPassword = async (e) => {
     e.preventDefault();
-    setColor('red')
+    setColor("red");
     if (!password && !passwordConfirm) {
       setError("All Fields Are Mendatory");
       return;
@@ -25,17 +26,19 @@ export default function Form({ id, token,setIsLoading }) {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
-      body: JSON.stringify({password:password}),
+      body: JSON.stringify({ password: password }),
     };
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       const data = await fetch(
-        process.env.REACT_APP_BASE_URL  + id + "/" + token,
+        process.env.REACT_APP_BASE_URL + id + "/" + token,
         requestOptions
       );
       if (data.ok) {
-        setColor('green')
-        setError("Password Successfully Updated, the window will be closed in 5 seconds");
+        setColor("green");
+        setError(
+          "Password Successfully Updated, the window will be closed in 5 seconds"
+        );
         return;
       }
       setError("Token Has Expierd Or Invalid");
@@ -43,27 +46,42 @@ export default function Form({ id, token,setIsLoading }) {
       setError("Error While Updating The Password");
       throw new Error("Error While Updating The Password");
     }
-    setIsLoading(false)
+    setIsLoading(false);
     setTimeout(() => {
-      window.close()
+      window.close();
     }, 5000);
   };
   return (
     <form onSubmit={resetPassword}>
-      <h2>Password Reset</h2>
+      <Typography variant="h5">Reset Password</Typography>
       <div>
-        <label>Passowrd</label>
-        <input type="password" onChange={(e) => setPassword(e.target.value)} />
+        {/* <label>Passowrd</label> */}
+        <TextField
+          fullWidth
+          label="Password"
+          type="password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
       </div>
       <div>
-        <label>Passowrd Confirm</label>
-        <input
+        {/* <label>Passowrd Confirm</label> */}
+        <TextField
+          label="Password Confirm"
           type="password"
+          fullWidth
           onChange={(e) => setPasswordConfirm(e.target.value)}
         />
       </div>
-      <button type="submit">Change Password</button>
-      <span className="error-text" style={{color:color}}>{error}</span>
+      <div className="form__btn">
+        <Button
+        fullWidth 
+        variant="contained" type="submit">
+          Change Password
+        </Button>
+      </div>
+      <Typography varient="h6" mt={1} style={{ color: color }}>
+        {error}
+      </Typography>
     </form>
   );
 }
