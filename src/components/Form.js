@@ -30,18 +30,13 @@ export default function Form({ id, token, setIsLoading }) {
     };
     try {
       setIsLoading(true);
-      const data = await fetch(
-        process.env.REACT_APP_BASE_URL + id + "/" + token,
-        requestOptions
-      );
+      const data = await fetch(process.env.REACT_APP_BASE_URL + id + "/" + token, requestOptions);
       if (data.ok) {
         setColor("green");
-        setError(
-          "Password Successfully Updated, the window will be closed in 5 seconds"
-        );
-        return;
+        setError("Password Successfully Updated, the window will be closed in 5 seconds");
+      } else {
+        setError("Token Has Expierd Or Invalid");
       }
-      setError("Token Has Expierd Or Invalid");
     } catch {
       setError("Error While Updating The Password");
       throw new Error("Error While Updating The Password");
@@ -73,9 +68,7 @@ export default function Form({ id, token, setIsLoading }) {
         />
       </div>
       <div className="form__btn">
-        <Button
-        fullWidth 
-        variant="contained" type="submit">
+        <Button fullWidth variant="contained" type="submit">
           Change Password
         </Button>
       </div>
